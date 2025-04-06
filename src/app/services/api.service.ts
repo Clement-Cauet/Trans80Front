@@ -51,4 +51,18 @@ export class ApiService {
                 });
         });
     }
+
+    getStopTimesByTripId(tripId: string): Promise<any[]> {
+        return new Promise(resolve => {
+            this.httpClient.get(`/api/stop_times/${tripId}`)
+                .subscribe({
+                    next: (response: any) => {
+                        resolve(response);
+                    },
+                    error: () => {
+                        resolve([]);
+                    }
+                });
+        });
+    }
 }

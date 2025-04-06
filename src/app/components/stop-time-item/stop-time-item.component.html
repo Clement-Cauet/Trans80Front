@@ -1,0 +1,10 @@
+<div class="max-w bg-white flex items-center my-2">
+    <div class="flex justify-between items-center p-3 w-full">
+        <p class="text-sm font-medium text-gray-900 truncate">
+            {{ stopTime.stop.name }}
+        </p>
+        <p class="text-sm text-gray-500 truncate">
+            {{ stopTime.departureTime | timeFormat }}
+        </p>
+    </div>
+</div>
