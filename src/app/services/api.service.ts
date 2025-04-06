@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Route } from "../models/route";
+import { Agency } from "../models/agency";
 
 @Injectable({
     providedIn: "root",
@@ -19,6 +20,20 @@ export class ApiService {
                     },
                     error: () => {
                         resolve(false);
+                    }
+                });
+        });
+    }
+
+    getAllAgencies(): Promise<Agency[]> {
+        return new Promise(resolve => {
+            this.httpClient.get<Agency[]>("/api/agencies")
+                .subscribe({
+                    next: (response: Agency[]) => {
+                        resolve(response);
+                    },
+                    error: () => {
+                        resolve([]);
                     }
                 });
         });
