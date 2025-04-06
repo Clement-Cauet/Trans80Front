@@ -1,0 +1,14 @@
+<div class="flex justify-center space-x-4 h-full">
+  <button 
+    class="px-4 py-2 rounded border"
+    [ngClass]="getButtonClasses('routes')"
+    (click)="setView('routes')">
+    Routes
+  </button>
+  <button 
+    class="px-4 py-2 rounded border"
+    [ngClass]="getButtonClasses('stops')"
+    (click)="setView('stops')">
+    Stops
+  </button>
+</div>

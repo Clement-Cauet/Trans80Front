@@ -6,14 +6,17 @@ import { SearchbarComponent } from "../searchbar/searchbar.component";
 import { Observable, combineLatest, BehaviorSubject } from 'rxjs';
 import { Route } from '../../models/route';
 import { map } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
+import { NavtabComponent } from "../navtab/navtab.component";
 
 @Component({
   selector: 'app-schedule',
   imports: [
     CommonModule,
     RouteItemComponent,
-    SearchbarComponent
-  ],
+    SearchbarComponent,
+    NavtabComponent
+],
   templateUrl: './schedule.component.html',
   standalone: true,
   styleUrl: './schedule.component.css'
@@ -21,10 +24,15 @@ import { map } from 'rxjs/operators';
 export class ScheduleComponent implements OnInit {
   private searchText$ = new BehaviorSubject<string>('');
   filteredRoutes$!: Observable<Route[]>;
+  view: 'routes' | 'stops' = 'routes';
 
-  constructor(private routeService: RouteService) { }
+  constructor(private routeService: RouteService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.activatedRoute.queryParams.subscribe(params => {
+      this.view = params['view'] || 'routes';
+    });
+
     const routes$ = this.routeService.getAllRoutes();
 
     this.filteredRoutes$ = combineLatest([routes$, this.searchText$]).pipe(

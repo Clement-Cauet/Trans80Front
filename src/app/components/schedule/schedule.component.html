@@ -1,5 +1,18 @@
-<app-searchbar (searchChange)="onSearchChange($event)"></app-searchbar>
+<div class="max-w mx-auto">
+  <div class="flex items-center justify-between mb-4 space-x-4">
+    <app-navtab [view]="view" (viewChange)="view = $event"></app-navtab>
+    <div class="flex-1">
+      <app-searchbar (searchChange)="onSearchChange($event)"></app-searchbar>
+    </div>
+  </div>
+</div>
 
-<div *ngIf="filteredRoutes$ | async as routes">
-    <app-route-item *ngFor="let route of filteredRoutes$ | async" [route]="route"></app-route-item>
+<div *ngIf="view === 'routes'">
+  <div *ngIf="filteredRoutes$ | async as routes">
+    <app-route-item *ngFor="let route of routes" [route]="route"></app-route-item>
+  </div>
+</div>
+
+<div *ngIf="view === 'stops'">
+  <p class="text-center text-gray-500">Stops view is under construction.</p>
 </div>
