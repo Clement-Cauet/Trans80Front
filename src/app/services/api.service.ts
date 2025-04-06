@@ -2,6 +2,8 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Route } from "../models/route";
 import { Agency } from "../models/agency";
+import { Stop } from "../models/stop";
+import { StopTime } from "../models/stop_time";
 
 @Injectable({
     providedIn: "root",
@@ -67,9 +69,27 @@ export class ApiService {
         });
     }
 
-    getStopTimesByTripId(tripId: string): Promise<any[]> {
+    getStopTimes(tripId?: string, stopId?: string): Promise<StopTime[]> {
         return new Promise(resolve => {
-            this.httpClient.get(`/api/stop_times/${tripId}`)
+            const params: any = {};
+            if (tripId) params.tripId = tripId;
+            if (stopId) params.stopId = stopId;
+
+            this.httpClient.get<StopTime[]>(`/api/stop_times`, { params })
+                .subscribe({
+                    next: (response: StopTime[]) => {
+                        resolve(response);
+                    },
+                    error: () => {
+                        resolve([]);
+                    }
+                });
+        });
+    }
+
+    getAllStops(): Promise<Stop[]> {
+        return new Promise(resolve => {
+            this.httpClient.get<Stop[]>("/api/stops")
                 .subscribe({
                     next: (response: any) => {
                         resolve(response);

@@ -14,5 +14,7 @@
 </div>
 
 <div *ngIf="view === 'stops'">
-  <p class="text-center text-gray-500">Stops view is under construction.</p>
+  <div *ngIf="filteredStops$ | async as stops">
+    <app-stop-item *ngFor="let stop of stops" [stop]="stop"></app-stop-item>
+  </div>
 </div>

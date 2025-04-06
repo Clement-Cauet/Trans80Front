@@ -24,7 +24,7 @@ export class TripItemComponent {
 
   onClick() {
     if (!this.isExpanded) {
-      this.stopTimeService.getStopTimesByTripId(this.trip.id.id).then(stopTimes => {
+      this.stopTimeService.getStopTimes(this.trip.id.id).then(stopTimes => {
         this.stopTimes = stopTimes;
       });
     }

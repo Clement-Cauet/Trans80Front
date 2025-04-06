@@ -8,15 +8,18 @@ import { Route } from '../../models/route';
 import { map } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { NavtabComponent } from "../../components/navtab/navtab.component";
-
+import { StopItemComponent } from '../../components/stop-item/stop-item.component';
+import { Stop } from '../../models/stop';
+import { StopService } from '../../services/stop.service';
 @Component({
   selector: 'app-schedule',
   imports: [
     CommonModule,
     RouteItemComponent,
     SearchbarComponent,
-    NavtabComponent
-],
+    NavtabComponent,
+    StopItemComponent
+  ],
   templateUrl: './schedule.component.html',
   standalone: true,
   styleUrl: './schedule.component.css'
@@ -24,9 +27,14 @@ import { NavtabComponent } from "../../components/navtab/navtab.component";
 export class ScheduleComponent implements OnInit {
   private searchText$ = new BehaviorSubject<string>('');
   filteredRoutes$!: Observable<Route[]>;
+  filteredStops$!: Observable<Stop[]>;
   view: 'routes' | 'stops' = 'routes';
 
-  constructor(private routeService: RouteService, private activatedRoute: ActivatedRoute) { }
+  constructor(
+    private routeService: RouteService,
+    private stopService: StopService,
+    private activatedRoute: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe(params => {
@@ -34,6 +42,7 @@ export class ScheduleComponent implements OnInit {
     });
 
     const routes$ = this.routeService.getAllRoutes();
+    const stops$ = this.stopService.getAllStops();
 
     this.filteredRoutes$ = combineLatest([routes$, this.searchText$]).pipe(
       map(([routes, searchText]) => {
@@ -43,13 +52,17 @@ export class ScheduleComponent implements OnInit {
         );
       })
     );
+
+    this.filteredStops$ = combineLatest([stops$, this.searchText$]).pipe(
+      map(([stops, searchText]) => {
+        return stops.filter(stop =>
+          stop.name.toLowerCase().includes(searchText.toLowerCase())
+        );
+      })
+    );
   }
 
   onSearchChange(searchText: string): void {
     this.searchText$.next(searchText);
-  }
-
-  loadRoutes(): void {
-    this.routeService.refreshRoutes();
   }
 }
