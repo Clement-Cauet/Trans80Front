@@ -1,0 +1,13 @@
+<app-searchbar (searchChange)="onSearchChange($event)"></app-searchbar>
+
+<div class="flex space-x-4 my-4">
+    <input type="date" [value]="date" (change)="onDateInputChange($event)"
+        class="border rounded px-2 py-1" />
+
+    <select (change)="onDirectionInputChange($event)" class="border rounded px-2 py-1">
+        <option [value]="0">Aller</option>
+        <option [value]="1">Retour</option>
+    </select>
+</div>
+
+<app-trip-item *ngFor="let trip of filteredTrips" [trip]="trip"></app-trip-item>

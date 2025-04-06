@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Route } from '../../models/route';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-route-item',
@@ -12,4 +13,10 @@ import { CommonModule } from '@angular/common';
 })
 export class RouteItemComponent {
   @Input() route!: Route;
+
+  constructor(private router: Router) {}
+
+  onClick() {
+    this.router.navigate(['/trips', this.route.id.id]);
+  }
 }

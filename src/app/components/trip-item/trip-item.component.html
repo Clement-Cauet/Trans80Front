@@ -1,17 +1,12 @@
 <div class="max-w min-h-20 border-2 border-gray-700 rounded-lg bg-white cursor-pointer flex items-center my-2"
     (click)="onClick()">
     <div class="flex items-center space-x-4 p-3 w-full">
-        <div class="rounded-lg px-2 py-1 text-white font-bold"
-            [style.background-color]="'#' + (route.color || 'cccccc')">
-            {{ route.id.id }}
-        </div>
-
         <div class="flex-1 min-w-0">
             <p class="text-sm font-medium text-gray-900 truncate">
-                {{ route.longName }}
+                {{ trip.tripHeadsign}}
             </p>
             <p class="text-sm text-gray-500 truncate">
-                {{ route.shortName }}
+                {{ trip.tripShortName }}
             </p>
         </div>
     </div>

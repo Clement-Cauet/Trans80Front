@@ -37,4 +37,18 @@ export class ApiService {
                 });
         });
     }
+
+    getTripsByRouteId(routeId: string, date: string, directionId: number): Promise<any[]> {
+        return new Promise(resolve => {
+            this.httpClient.get(`/api/trips/${routeId}?date=${date}&directionId=${directionId}`)
+                .subscribe({
+                    next: (response: any) => {
+                        resolve(response);
+                    },
+                    error: () => {
+                        resolve([]);
+                    }
+                });
+        });
+    }
 }
