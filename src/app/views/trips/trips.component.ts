@@ -3,8 +3,8 @@ import { Trip } from '../../models/trip';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { TripService } from '../../services/trip.service';
-import { SearchbarComponent } from "../searchbar/searchbar.component";
-import { TripItemComponent } from "../trip-item/trip-item.component";
+import { SearchbarComponent } from "../../components/searchbar/searchbar.component";
+import { TripItemComponent } from "../../components/trip-item/trip-item.component";
 import { CommonModule } from '@angular/common';
 import { map } from 'rxjs/operators';
 

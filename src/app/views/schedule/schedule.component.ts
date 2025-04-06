@@ -1,13 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouteService } from '../../services/route.service';
-import { RouteItemComponent } from "../route-item/route-item.component";
-import { SearchbarComponent } from "../searchbar/searchbar.component";
+import { RouteItemComponent } from "../../components/route-item/route-item.component";
+import { SearchbarComponent } from "../../components/searchbar/searchbar.component";
 import { Observable, combineLatest, BehaviorSubject } from 'rxjs';
 import { Route } from '../../models/route';
 import { map } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
-import { NavtabComponent } from "../navtab/navtab.component";
+import { NavtabComponent } from "../../components/navtab/navtab.component";
 
 @Component({
   selector: 'app-schedule',
