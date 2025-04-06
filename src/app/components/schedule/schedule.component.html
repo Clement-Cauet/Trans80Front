@@ -1,3 +1,5 @@
 <app-searchbar></app-searchbar>
-<app-route-item></app-route-item>
-<app-stop-item></app-stop-item>
+
+<div *ngIf="routes$ | async as routes">
+    <app-route-item *ngFor="let route of routes" [route]="route"></app-route-item>
+</div>
