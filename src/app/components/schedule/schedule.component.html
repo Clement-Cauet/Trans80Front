@@ -1,5 +1,5 @@
-<app-searchbar></app-searchbar>
+<app-searchbar (searchChange)="onSearchChange($event)"></app-searchbar>
 
-<div *ngIf="routes$ | async as routes">
-    <app-route-item *ngFor="let route of routes" [route]="route"></app-route-item>
+<div *ngIf="filteredRoutes$ | async as routes">
+    <app-route-item *ngFor="let route of filteredRoutes$ | async" [route]="route"></app-route-item>
 </div>
