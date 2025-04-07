@@ -21,7 +21,7 @@ export class NavtabComponent {
 
   getButtonClasses(buttonView: 'routes' | 'stops'): string {
     return this.view === buttonView
-      ? 'bg-white text-blue-500 border-blue-500'
-      : 'bg-blue-500 text-white';
+      ? 'bg-white text-blue-800 border-blue-800'
+      : 'bg-blue-800 text-white';
   }
 }
