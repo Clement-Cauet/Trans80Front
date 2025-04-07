@@ -1,13 +1,9 @@
 import { Injectable } from '@angular/core';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
-import { Router } from '@angular/router';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-    constructor(
-        private oidcSecurityService: OidcSecurityService,
-        private router: Router
-    ) { }
+    constructor(private oidcSecurityService: OidcSecurityService) { }
 
     userData: any = {};
 
@@ -17,7 +13,6 @@ export class AuthService {
                 console.log('Authenticated:', isAuthenticated);
                 console.log('User Data:', userData);
                 console.log('Access Token:', accessToken);
-                if (!isAuthenticated) this.login();
                 this.userData = userData;
             },
             error: (err) => console.error('Authentication check failed:', err)
@@ -25,7 +20,16 @@ export class AuthService {
     }
 
     login() {
-        this.oidcSecurityService.authorize();
+        this.oidcSecurityService.checkAuth().subscribe({
+            next: ({ isAuthenticated }) => {
+                if (!isAuthenticated) {
+                    this.oidcSecurityService.authorize();
+                } else {
+                    console.log('Already authenticated');
+                }
+            },
+            error: (err) => console.error('Authentication check failed:', err)
+        });
     }
 
     logout() {
