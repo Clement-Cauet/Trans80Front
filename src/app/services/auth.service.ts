@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
+import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -17,6 +18,17 @@ export class AuthService {
             },
             error: (err) => console.error('Authentication check failed:', err)
         });
+    }
+
+    isAuthenticated(): boolean {
+        let authenticated = false;
+        this.oidcSecurityService.isAuthenticated().subscribe({
+            next: (isAuthenticated) => {
+                authenticated = isAuthenticated;
+            },
+            error: (err) => console.error('Authentication check failed:', err)
+        });
+        return authenticated;
     }
 
     login() {
