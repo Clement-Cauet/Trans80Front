@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
+import { User } from '../../models/user';
 
 @Component({
   selector: 'app-home',
@@ -10,13 +11,13 @@ import { AuthService } from '../../services/auth.service';
 })
 export class HomeComponent implements OnInit {
 
-  givenName: string = '';
+  user: User = new User({});
 
   constructor(private authService: AuthService) { }
   
   ngOnInit() {
     if (this.authService.isAuthenticated()) {
-      this.givenName = this.authService.userData.given_name;
+      this.user = this.authService.user;
     }
   }
 

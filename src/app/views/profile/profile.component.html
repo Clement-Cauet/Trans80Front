@@ -10,20 +10,20 @@
         <div class="flex space-x-4">
             <div class="flex-1">
                 <label for="firstName" class="block text-sm font-medium text-gray-700">Prénom</label>
-                <input id="firstName" name="firstName" type="text" [(ngModel)]="firstName"
+                <input id="firstName" name="firstName" type="text" [(ngModel)]="user.family_name"
                     class="block w-full p-2 ps-2 text-sm text-gray-900 border shadow-md border-gray-700 rounded-lg bg-white focus:ring-blue-800 focus:border-blue-800" />
             </div>
 
             <div class="flex-1">
                 <label for="lastName" class="block text-sm font-medium text-gray-700">Nom</label>
-                <input id="lastName" name="lastName" type="text" [(ngModel)]="lastName"
+                <input id="lastName" name="lastName" type="text" [(ngModel)]="user.given_name"
                     class="block w-full p-2 ps-2 text-sm text-gray-900 border shadow-md border-gray-700 rounded-lg bg-white focus:ring-blue-800 focus:border-blue-800" />
             </div>
         </div>
 
         <div class="mb-4">
             <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-            <input id="email" name="email" type="email" [(ngModel)]="email"
+            <input id="email" name="email" type="email" [(ngModel)]="user.email"
                 class="block w-full p-2 ps-2 text-sm text-gray-900 border shadow-md border-gray-700 rounded-lg bg-white focus:ring-blue-800 focus:border-blue-800" />
         </div>
     </form>

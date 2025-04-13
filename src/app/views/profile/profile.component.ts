@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { User } from '../../models/user';
 
 @Component({
   selector: 'app-profile',
@@ -15,20 +16,14 @@ import { FormsModule } from '@angular/forms';
 export class ProfileComponent {
 
   isAuthenticated: boolean = false;
-  firstName: string = '';
-  lastName: string = '';
-  email: string = '';
+  user: User = new User({});
 
   constructor(private authService: AuthService) { }
 
   ngOnInit() {
-    this.isAuthenticated = this.authService.isAuthenticated();
-
-    if (this.isAuthenticated) {
-      const userData = this.authService.userData;
-      this.firstName = userData.given_name || '';
-      this.lastName = userData.family_name || '';
-      this.email = userData.email || '';
+    if (this.authService.isAuthenticated()) {
+      this.isAuthenticated = true;
+      this.user = this.authService.user;
     }
   }
 

@@ -1,20 +1,30 @@
 import { Injectable } from '@angular/core';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { Observable } from 'rxjs';
+import { User } from '../models/user';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-    constructor(private oidcSecurityService: OidcSecurityService) { }
 
-    userData: any = {};
+    user!: User;
+    
+    constructor(private oidcSecurityService: OidcSecurityService) { }
 
     initAuth() {
         this.oidcSecurityService.checkAuth().subscribe({
             next: ({ isAuthenticated, userData, accessToken }) => {
-                console.log('Authenticated:', isAuthenticated);
-                console.log('User Data:', userData);
-                console.log('Access Token:', accessToken);
-                this.userData = userData;
+                if (isAuthenticated) {
+                    this.user = new User({
+                        sub: userData.sub,
+                        email_verified: userData.email_verified,
+                        name: userData.name,
+                        preferred_username: userData.preferred_username,
+                        given_name: userData.given_name,
+                        family_name: userData.family_name,
+                        email: userData.email,
+                        accessToken: accessToken
+                    });
+                }
             },
             error: (err) => console.error('Authentication check failed:', err)
         });
