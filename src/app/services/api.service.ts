@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Route } from "../models/route";
 import { Agency } from "../models/agency";
@@ -41,9 +41,17 @@ export class ApiService {
         });
     }
 
-    getAllRoutes(): Promise<Route[]> {
+    getAllRoutes(params?: { routeId?: string; stopId?: string }): Promise<Route[]> {
         return new Promise(resolve => {
-            this.httpClient.get("/api/routes")
+            let httpParams = new HttpParams();
+            if (params?.routeId) {
+                httpParams = httpParams.set('routeId', params.routeId);
+            }
+            if (params?.stopId) {
+                httpParams = httpParams.set('stopId', params.stopId);
+            }
+
+            this.httpClient.get<Route[]>("/api/routes", { params: httpParams })
                 .subscribe({
                     next: (response: any) => {
                         resolve(response);
@@ -69,13 +77,26 @@ export class ApiService {
         });
     }
 
-    getStopTimes(tripId?: string, stopId?: string): Promise<StopTime[]> {
+    getStopTimes(params?: {tripId?: string, routeId?: string, stopId?: string, date?: string, directionId?: string}): Promise<StopTime[]> {
         return new Promise(resolve => {
-            const params: any = {};
-            if (tripId) params.tripId = tripId;
-            if (stopId) params.stopId = stopId;
-
-            this.httpClient.get<StopTime[]>(`/api/stop_times`, { params })
+            let httpParams = new HttpParams();
+            if (params?.tripId) {
+                httpParams = httpParams.set('tripId', params.tripId);
+            }
+            if (params?.routeId) {
+                httpParams = httpParams.set('routeId', params.routeId);
+            }
+            if (params?.stopId) {
+                httpParams = httpParams.set('stopId', params.stopId);
+            }
+            if (params?.date) {
+                httpParams = httpParams.set('date', params.date);
+            }
+            if (params?.directionId) {
+                httpParams = httpParams.set('directionId', params.directionId);
+            }
+        
+            this.httpClient.get<StopTime[]>(`/api/stop_times`, { params: httpParams })
                 .subscribe({
                     next: (response: StopTime[]) => {
                         resolve(response);

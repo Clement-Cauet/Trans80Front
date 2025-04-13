@@ -16,6 +16,7 @@ import { StopTimeService } from '../../services/stop_time.service';
 })
 export class TripItemComponent {
   @Input() trip!: Trip;
+  @Input() date!: string;
 
   stopTimes: StopTime[] = [];
   isExpanded: boolean = false;
@@ -24,7 +25,7 @@ export class TripItemComponent {
 
   onClick() {
     if (!this.isExpanded) {
-      this.stopTimeService.getStopTimes(this.trip.id.id).then(stopTimes => {
+      this.stopTimeService.getStopTimes({ tripId: this.trip.id.id, date: this.date }).then(stopTimes => {
         this.stopTimes = stopTimes;
       });
     }

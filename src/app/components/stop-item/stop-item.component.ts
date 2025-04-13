@@ -1,8 +1,13 @@
 import { Component, Input } from '@angular/core';
 import { Stop } from '../../models/stop';
+import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-stop-item',
+  imports: [
+    CommonModule
+  ],
   templateUrl: './stop-item.component.html',
   styleUrl: './stop-item.component.css',
   standalone: true
@@ -10,7 +15,9 @@ import { Stop } from '../../models/stop';
 export class StopItemComponent {
   @Input() stop!: Stop;
 
+  constructor(private router: Router) {}
+
   onClick() {
-    console.log('Stop clicked:', this.stop);
+    this.router.navigate(['/stop', this.stop.id.id]);
   }
 }

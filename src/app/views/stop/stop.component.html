@@ -1,0 +1,8 @@
+<app-searchbar (searchChange)="onSearchChange($event)"></app-searchbar>
+
+<div class="flex space-x-4 my-4">
+    <input type="date" [value]="date" (change)="onDateInputChange($event)"
+        class="border rounded px-2 py-1" />
+</div>
+
+<app-stop-route-item *ngFor="let route of filteredRoutes" [route]="route" [stopId]="stopId" [date]="date"></app-stop-route-item>

@@ -8,7 +8,7 @@ import { ApiService } from "./api.service";
 export class StopTimeService {
     constructor(private apiService: ApiService) { }
 
-    getStopTimes(tripId?: string, stopId?: string): Promise<StopTime[]> {
-        return this.apiService.getStopTimes(tripId, stopId);
+    getStopTimes(params?: {tripId?: string, routeId?: string, stopId?: string, date?: string, directionId?: string}): Promise<StopTime[]> {
+        return this.apiService.getStopTimes(params);
     }
 }

@@ -9,7 +9,7 @@ import { ApiService } from "./api.service";
 export class RouteService {
     constructor(private apiService: ApiService) {}
 
-    getAllRoutes(): Promise<Route[]> {
-        return this.apiService.getAllRoutes();
+    getAllRoutes(params?: { routeId?: string; stopId?: string }): Promise<Route[]> {
+        return this.apiService.getAllRoutes(params);
     }
 }

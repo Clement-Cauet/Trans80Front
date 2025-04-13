@@ -15,7 +15,7 @@ import { map } from 'rxjs/operators';
     CommonModule,
     SearchbarComponent,
     TripItemComponent
-],
+  ],
   templateUrl: './trips.component.html',
   styleUrl: './trips.component.css'
 })
@@ -27,13 +27,10 @@ export class TripsComponent implements OnInit {
   search$ = new BehaviorSubject<string>('');
   filteredTrips: Trip[] = [];
 
-  constructor(
-    private route: ActivatedRoute,
-    private tripService: TripService
-  ) { }
+  constructor(private activedRoute: ActivatedRoute, private tripService: TripService) { }
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
+    this.activedRoute.paramMap.subscribe(params => {
       this.routeId = params.get('routeId')!;
       this.loadTrips();
     });
@@ -61,7 +58,7 @@ export class TripsComponent implements OnInit {
     const input = event.target as HTMLInputElement;
     this.onDateChange(input.value);
   }
-  
+
   onDirectionInputChange(event: Event): void {
     const select = event.target as HTMLSelectElement;
     this.onDirectionChange(select.value);
