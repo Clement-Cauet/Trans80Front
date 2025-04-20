@@ -18,12 +18,16 @@ export class TripService {
     }
 
     refreshTrips(routeId: string, date: string, directionId: number): void {
-        this.apiService.getTripsByRouteId(routeId, date, directionId).then((trips: Trip[]) => {
+        this.apiService.getAllTrips(routeId, date, directionId).then((trips: Trip[]) => {
             this.trips$.next(trips);
         });
     }
 
     getTrips() {
         return this.trips$.asObservable();
+    }
+
+    getTripById(tripId: string): Promise<Trip | null> {
+        return this.apiService.getTripById(tripId);
     }
 }

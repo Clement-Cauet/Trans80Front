@@ -131,15 +131,40 @@ export class ApiService {
         });
     }
 
-    getTripsByRouteId(routeId: string, date: string, directionId: number): Promise<any[]> {
+    getAllTrips(routeId?: string, date?: string, directionId?: number): Promise<any[]> {
         return new Promise(resolve => {
-            this.httpClient.get(`/api/trips/${routeId}?date=${date}&directionId=${directionId}`)
+            let httpParams = new HttpParams();
+            if (routeId) {
+                httpParams = httpParams.set('routeId', routeId);
+            }
+            if (date) {
+                httpParams = httpParams.set('date', date);
+            }
+            if (directionId !== undefined) {
+                httpParams = httpParams.set('directionId', directionId.toString());
+            }
+
+            this.httpClient.get<any[]>('/api/trips', { params: httpParams })
+                .subscribe({
+                    next: (response: any[]) => {
+                        resolve(response);
+                    },
+                    error: () => {
+                        resolve([]);
+                    }
+                });
+        });
+    }
+
+    getTripById(tripId: string): Promise<any> {
+        return new Promise(resolve => {
+            this.httpClient.get<any>(`/api/trips/${tripId}`)
                 .subscribe({
                     next: (response: any) => {
                         resolve(response);
                     },
                     error: () => {
-                        resolve([]);
+                        resolve(null);
                     }
                 });
         });
