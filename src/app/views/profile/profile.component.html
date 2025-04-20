@@ -29,8 +29,10 @@
     </form>
 
     <h1 class="text-3xl font-bold">Favorite</h1>
+    <app-favorite-item *ngFor="let favorite of favorites" [favorite]="favorite"></app-favorite-item>
 
     <h1 class="text-3xl font-bold">History</h1>
+    <app-history-item *ngFor="let history of histories" [history]="history"></app-history-item>
 
     <button class="w-full px-4 py-2 text-red-600 rounded border border-red-600 cursor-pointer" (click)="logout()">
         Logout

@@ -57,4 +57,8 @@ export class AuthService {
     logout() {
         this.oidcSecurityService.logoff().subscribe();
     }
+
+    getAccessToken(): string {
+        return this.user?.accessToken || '';
+    }
 }

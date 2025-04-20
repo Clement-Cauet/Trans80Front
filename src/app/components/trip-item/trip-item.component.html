@@ -1,6 +1,16 @@
 <div class="max-w min-h-20 bg-white border shadow-md border-gray-700 rounded-lg my-2">
     <div class="flex items-center cursor-pointer" (click)="onClick()">
         <div class="flex items-center space-x-4 p-3 w-full">
+            <button class="relative cursor-pointer" (click)="openModal($event)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-ellipsis-vertical-icon lucide-ellipsis-vertical">
+                    <circle cx="12" cy="12" r="1" />
+                    <circle cx="12" cy="5" r="1" />
+                    <circle cx="12" cy="19" r="1" />
+                </svg>
+            </button>
+
             <div class="flex-1 min-w-0">
                 <p class="text-sm font-medium text-gray-900 truncate">
                     {{ trip.tripHeadsign }}
@@ -9,14 +19,20 @@
                     {{ trip.tripShortName }}
                 </p>
             </div>
-            <div [class.rotate-270]="!isExpanded" [class.rotate-360]="isExpanded" class="transition-transform duration-300">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+
+            <div [class.rotate-270]="!isExpanded" [class.rotate-360]="isExpanded"
+                class="transition-transform duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-700" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                 </svg>
             </div>
         </div>
     </div>
+
     <div *ngIf="isExpanded && stopTimes.length > 0" class="mt-4 ps-10 border-t-1 border-gray-200">
         <app-stop-time-item *ngFor="let stopTime of stopTimes" [stopTime]="stopTime"></app-stop-time-item>
     </div>
+
+    <app-trip-modal *ngIf="isModalOpen" (close)="closeModal()" [trip]="trip"></app-trip-modal>
 </div>
