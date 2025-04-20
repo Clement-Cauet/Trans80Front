@@ -1,13 +1,48 @@
-<app-searchbar (searchChange)="onSearchChange($event)"></app-searchbar>
+<ng-container *ngIf="tripId; else tripListTemplate">
+    <div class="max-w min-h-20 bg-white border shadow-md border-gray-700 rounded-lg my-2">
 
-<div class="flex space-x-4 my-4">
-    <input type="date" [value]="date" (change)="onDateInputChange($event)"
-        class="border rounded px-2 py-1" />
+        <div class="flex items-center space-x-4 p-3 w-full">
+            <div class="rounded-lg px-2 py-1 text-white font-bold"
+                [style.background-color]="'#' + (trip?.route?.color || 'cccccc')">
+                {{ trip?.route?.id?.id }}
+            </div>
+            <div class="flex-1 min-w-0">
+                <p class="text-sm font-medium text-gray-900 truncate">
+                    {{ trip?.route?.longName }}
+                </p>
+                <p class="text-sm text-gray-500 truncate">
+                    {{ trip?.tripHeadsign }}
+                </p>
+                <p class="text-sm text-gray-500 truncate">
+                    {{ trip?.tripShortName }}
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="flex space-x-4 my-4">
+        <input type="date" [value]="date" (change)="onDateInputChange($event)" class="border rounded px-2 py-1" />
+    </div>
 
-    <select (change)="onDirectionInputChange($event)" class="border rounded px-2 py-1">
-        <option [value]="0">Aller</option>
-        <option [value]="1">Retour</option>
-    </select>
-</div>
+    <div *ngIf="stopTimes.length > 0; else noStopTimes">
+        <app-stop-time-item *ngFor="let stopTime of stopTimes" [stopTime]="stopTime"></app-stop-time-item>
+    </div>
 
-<app-trip-item *ngFor="let trip of filteredTrips" [trip]="trip" [date]="date"></app-trip-item>
+    <ng-template #noStopTimes>
+        <p class="text-gray-500">Aucun horaire disponible pour ce voyage.</p>
+    </ng-template>
+</ng-container>
+
+<ng-template #tripListTemplate>
+    <app-searchbar (searchChange)="onSearchChange($event)"></app-searchbar>
+
+    <div class="flex space-x-4 my-4">
+        <input type="date" [value]="date" (change)="onDateInputChange($event)" class="border rounded px-2 py-1" />
+
+        <select (change)="onDirectionInputChange($event)" class="border rounded px-2 py-1">
+            <option [value]="0">Aller</option>
+            <option [value]="1">Retour</option>
+        </select>
+    </div>
+
+    <app-trip-item *ngFor="let trip of filteredTrips" [trip]="trip" [date]="date"></app-trip-item>
+</ng-template>

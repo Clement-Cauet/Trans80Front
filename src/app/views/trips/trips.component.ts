@@ -7,6 +7,9 @@ import { SearchbarComponent } from "../../components/searchbar/searchbar.compone
 import { TripItemComponent } from "../../components/trip-item/trip-item.component";
 import { CommonModule } from '@angular/common';
 import { map } from 'rxjs/operators';
+import { StopTimeService } from '../../services/stop_time.service';
+import { StopTime } from '../../models/stop_time';
+import { StopTimeItemComponent } from "../../components/stop-time-item/stop-time-item.component";
 
 @Component({
   selector: 'app-trips',
@@ -14,24 +17,29 @@ import { map } from 'rxjs/operators';
   imports: [
     CommonModule,
     SearchbarComponent,
-    TripItemComponent
-  ],
+    TripItemComponent,
+    StopTimeItemComponent,
+],
   templateUrl: './trips.component.html',
   styleUrl: './trips.component.css'
 })
 export class TripsComponent implements OnInit {
   routeId!: string;
+  tripId?: string;
   date: string = this.getTodayDate();
   directionId: number = 0;
+  stopTimes: StopTime[] = [];
+  trip: Trip | undefined;
 
   search$ = new BehaviorSubject<string>('');
   filteredTrips: Trip[] = [];
 
-  constructor(private activedRoute: ActivatedRoute, private tripService: TripService) { }
+  constructor(private activedRoute: ActivatedRoute, private tripService: TripService, private stopTimeService: StopTimeService) { }
 
   ngOnInit(): void {
     this.activedRoute.paramMap.subscribe(params => {
       this.routeId = params.get('routeId')!;
+      this.tripId = this.activedRoute.snapshot.queryParamMap.get('tripId') || undefined;
       this.loadTrips();
     });
 
@@ -52,6 +60,20 @@ export class TripsComponent implements OnInit {
 
   loadTrips(): void {
     this.tripService.refreshTrips(this.routeId, this.date, this.directionId);
+    if (this.tripId) {
+      this.tripService.getTripById(this.tripId).then(trip => {
+        this.trip = trip;
+        console.log('Trip:', trip);
+      });
+    }
+  }
+
+  loadStopTimes(): void {
+    if (this.tripId) {
+      this.stopTimeService.getStopTimes({ tripId: this.tripId, date: this.date }).then(stopTimes => {
+        this.stopTimes = stopTimes;
+      });
+    }
   }
 
   onDateInputChange(event: Event): void {
@@ -67,6 +89,7 @@ export class TripsComponent implements OnInit {
   onDateChange(newDate: string): void {
     this.date = newDate;
     this.loadTrips();
+    this.loadStopTimes();
   }
 
   onDirectionChange(newDirection: string): void {

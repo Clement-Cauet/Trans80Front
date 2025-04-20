@@ -27,7 +27,7 @@ export class TripService {
         return this.trips$.asObservable();
     }
 
-    getTripById(tripId: string): Promise<Trip | null> {
+    getTripById(tripId: string): Promise<Trip> {
         return this.apiService.getTripById(tripId);
     }
 }
