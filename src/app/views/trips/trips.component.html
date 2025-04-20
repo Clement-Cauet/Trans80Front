@@ -28,7 +28,7 @@
     </div>
 
     <ng-template #noStopTimes>
-        <p class="text-gray-500">Aucun horaire disponible pour ce voyage.</p>
+        <p class="text-gray-500">Aucun horaire disponible pour ce trajet.</p>
     </ng-template>
 </ng-container>
 
@@ -44,5 +44,11 @@
         </select>
     </div>
 
-    <app-trip-item *ngFor="let trip of filteredTrips" [trip]="trip" [date]="date"></app-trip-item>
+    <div *ngIf="filteredTrips.length > 0; else noTrips">
+        <app-trip-item *ngFor="let trip of filteredTrips" [trip]="trip" [date]="date"></app-trip-item>
+    </div>
+
+    <ng-template #noTrips>
+        <p class="text-gray-500">Aucun trajet disponible.</p>
+    </ng-template>
 </ng-template>

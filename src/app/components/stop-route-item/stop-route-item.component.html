@@ -23,7 +23,7 @@
         </div>
     </div>
     <div *ngIf="isExpanded" class="mt-4 ps-10 border-t-1 border-gray-200">
-        <div *ngIf="stopTimesDirection0.length > 0" class="mb-4">
+        <div *ngIf="stopTimesDirection0.length > 0; else noStopTimesDirection0" class="mb-4">
             <h3 class="text-lg font-bold text-gray-800">Aller</h3>
             <div *ngFor="let stopTime of stopTimesDirection0" class="flex justify-between items-center p-3 w-full">
                 <p class="text-sm font-medium text-gray-900 truncate">
@@ -35,16 +35,26 @@
                 </p>
             </div>
         </div>
-        <div *ngIf="stopTimesDirection1.length > 0">
+        <ng-template #noStopTimesDirection0>
+            <h3 class="text-lg font-bold text-gray-800">Aller</h3>
+            <p class="text-gray-500">Aucun horaire disponible.</p>
+        </ng-template>
+
+        <div *ngIf="stopTimesDirection1.length > 0; else noStopTimesDirection1">
             <h3 class="text-lg font-bold text-gray-800">Retour</h3>
             <div *ngFor="let stopTime of stopTimesDirection1" class="flex justify-between items-center p-3 w-full">
                 <p class="text-sm font-medium text-gray-900 truncate">
                     {{ stopTime.trip.tripHeadsign }}
+                    <span *ngIf="stopTime.trip.tripHeadsign?.toLowerCase() === stopTime.stop.name.toLowerCase()">(terminus)</span>
                 </p>
                 <p class="text-sm text-gray-700">
                     {{ stopTime.departureTime | timeFormat }}
                 </p>
             </div>
         </div>
+        <ng-template #noStopTimesDirection1>
+            <h3 class="text-lg font-bold text-gray-800">Retour</h3>
+            <p class="text-gray-500">Aucun horaire disponible.</p>
+        </ng-template>
     </div>
 </div>

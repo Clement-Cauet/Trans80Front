@@ -31,7 +31,6 @@ export class StopComponent implements OnInit {
   ngOnInit(): void {
     this.activedRoute.paramMap.subscribe(params => {
       this.stopId = params.get('stopId')!;
-      this.loadRoutes();
     });
     
     const routes$ = this.routeService.getAllRoutes({ stopId: this.stopId });
@@ -48,10 +47,6 @@ export class StopComponent implements OnInit {
       .subscribe(filteredRoutes => {
         this.filteredRoutes = filteredRoutes;
       });
-  }
-
-  loadRoutes(): void {
-    //this.routeService.refreshRoutes();
   }
 
   onDateInputChange(event: Event): void {
