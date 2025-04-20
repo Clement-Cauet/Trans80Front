@@ -1,1 +1,13 @@
 <h1 class="text-3xl font-bold">Bonjour {{ user.given_name }}</h1>
+
+<app-map></app-map>
+
+<div class="flex justify-center items-center my-4">
+    <a href="https://trans80.hautsdefrance.fr/" target="_blank" rel="noopener noreferrer"
+        class="inline-block px-4 py-2 text-white bg-blue-800 hover:bg-blue-900 rounded-lg shadow-md">
+        Accéder au site officiel de Trans80
+    </a>
+</div>
+
+<h1 class="text-3xl font-bold">Favorite</h1>
+<app-favorite-item *ngFor="let favorite of favorites" [favorite]="favorite"></app-favorite-item>
