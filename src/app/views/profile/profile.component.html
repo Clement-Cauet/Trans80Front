@@ -1,11 +1,11 @@
 <div *ngIf="!isAuthenticated; else authenticatedTemplate">
     <button class="w-full px-4 py-2 text-blue-800 rounded border border-blue-800 cursor-pointer" (click)="login()">
-        Login
+        Connexion
     </button>
 </div>
 
 <ng-template #authenticatedTemplate>
-    <h1 class="text-3xl font-bold">Profile</h1>
+    <h1 class="text-3xl font-bold">Profil</h1>
     <form class="mt-4 space-y-4">
         <div class="flex space-x-4">
             <div class="flex-1">
@@ -28,11 +28,26 @@
         </div>
     </form>
 
-    <h1 class="text-3xl font-bold">Favorite</h1>
-    <app-favorite-item *ngFor="let favorite of favorites" [favorite]="favorite"></app-favorite-item>
+    <div class="my-10">
+        <h1 class="text-3xl font-bold">Favoris</h1>
+        <div *ngIf="favorites.length > 0; else noFavorites">
+            <app-favorite-item *ngFor="let favorite of favorites" [favorite]="favorite"></app-favorite-item>
+        </div>
+        <ng-template #noFavorites>
+            <p class="text-gray-500">Vous n'avez aucun favori pour le moment.</p>
+        </ng-template>
+    </div>
 
-    <h1 class="text-3xl font-bold">History</h1>
-    <app-history-item *ngFor="let history of histories" [history]="history"></app-history-item>
+
+    <div class="my-10">
+        <h1 class="text-3xl font-bold">Historique</h1>
+        <div *ngIf="histories.length > 0; else noHistories">
+            <app-history-item *ngFor="let history of histories" [history]="history"></app-history-item>
+        </div>
+        <ng-template #noHistories>
+            <p class="text-gray-500">Aucun historique disponible.</p>
+        </ng-template>
+    </div>
 
     <button class="w-full px-4 py-2 text-red-600 rounded border border-red-600 cursor-pointer" (click)="logout()">
         Logout
