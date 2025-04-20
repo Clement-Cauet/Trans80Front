@@ -8,6 +8,8 @@ import { HistoryItemComponent } from '../../components/history-item/history-item
 import { UserFavorite } from '../../models/user_favorite';
 import { UserHistory } from '../../models/user_history';
 import { UserService } from '../../services/user.service';
+import { TripService } from '../../services/trip.service';
+import { Trip } from '../../models/trip';
 
 @Component({
   selector: 'app-profile',
@@ -24,10 +26,10 @@ export class ProfileComponent {
 
   isAuthenticated: boolean = false;
   user: User = new User({});
-  favorites: UserFavorite[] = [];
-  histories: UserHistory[] = [];
+  favorites: { favorite: UserFavorite, trip: Trip | null }[] = [];
+  histories: { history: UserHistory, trip: Trip | null }[] = [];
 
-  constructor(private authService: AuthService, private userService: UserService) { }
+  constructor(private authService: AuthService, private userService: UserService, private tripService: TripService) { }
 
   ngOnInit() {
     if (this.authService.isAuthenticated()) {
@@ -35,6 +37,7 @@ export class ProfileComponent {
       this.user = this.authService.user;
       this.loadFavorites();
       this.loadHistories();
+      console.log('User:', this.user.accessToken);
     }
   }
 
@@ -48,8 +51,13 @@ export class ProfileComponent {
 
   loadFavorites() {
     this.userService.getUserFavorites().then(favorites => {
-      this.favorites = favorites;
-      console.log('Favorites:', this.favorites);
+      const favoritePromises = favorites.map(favorite =>
+        this.tripService.getTripById(favorite.trips_id!).then(trip => ({favorite, trip}))
+      );
+      Promise.all(favoritePromises).then(favoritesWithTrips => {
+        this.favorites = favoritesWithTrips;
+        console.log('Favorites with trips:', this.favorites);
+      });
     }).catch(error => {
       console.error('Error loading favorites:', error);
     });
@@ -57,8 +65,13 @@ export class ProfileComponent {
 
   loadHistories() {
     this.userService.getUserHistory().then(histories => {
-      this.histories = histories;
-      console.log('Histories:', this.histories);
+      const historyPromises = histories.map(history =>
+        this.tripService.getTripById(history.trips_id!).then(trip => ({history, trip}))
+      );
+      Promise.all(historyPromises).then(historiesWithTrips => {
+        this.histories = historiesWithTrips;
+        console.log('Histories with trips:', this.histories);
+      });
     }).catch(error => {
       console.error('Error loading histories:', error);
     });

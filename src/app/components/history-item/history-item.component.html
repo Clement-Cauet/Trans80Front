@@ -1,23 +1,29 @@
 <div class="max-w min-h-20 bg-white border shadow-md border-gray-700 rounded-lg my-2">
-    <div class="flex items-center cursor-pointer">
+    <div class="flex items-center">
         <div class="flex items-center space-x-4 p-3 w-full">
+            <div class="rounded-lg px-2 py-1 text-white font-bold"
+                [style.background-color]="'#' + (history.trip?.route?.color || 'cccccc')">
+                {{ history.trip?.route?.id?.id }}
+            </div>
             <div class="flex-1 min-w-0">
                 <p class="text-sm font-medium text-gray-900 truncate">
-                    history
+                    {{ history.trip?.route?.longName }}
                 </p>
                 <p class="text-sm text-gray-500 truncate">
-                    test
+                    {{ history.trip?.tripHeadsign }}
+                </p>
+                <p class="text-sm text-gray-500 truncate">
+                    {{ history.trip?.tripShortName }}
                 </p>
             </div>
-            <button class="relative cursor-pointer">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    class="lucide lucide-ellipsis-vertical-icon lucide-ellipsis-vertical">
-                    <circle cx="12" cy="12" r="1" />
-                    <circle cx="12" cy="5" r="1" />
-                    <circle cx="12" cy="19" r="1" />
-                </svg>
-            </button>
+            <div>
+                <p class="text-sm text-gray-500">
+                    Révervé le: {{ history.history.created_at! | formatDateTime }}
+                </p>
+                <p class="text-sm text-gray-500">
+                    Pour le: {{ history.history.reserved_date! | formatDate }}
+                </p>
+            </div>
         </div>
     </div>
 </div>

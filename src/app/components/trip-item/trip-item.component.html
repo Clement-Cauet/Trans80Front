@@ -34,5 +34,5 @@
         <app-stop-time-item *ngFor="let stopTime of stopTimes" [stopTime]="stopTime"></app-stop-time-item>
     </div>
 
-    <app-trip-modal *ngIf="isModalOpen" (close)="closeModal()" [trip]="trip"></app-trip-modal>
+    <app-trip-modal *ngIf="isModalOpen" (close)="closeModal()" [trip]="trip" [date]="date"></app-trip-modal>
 </div>

@@ -1,15 +1,22 @@
 <div class="max-w min-h-20 bg-white border shadow-md border-gray-700 rounded-lg my-2">
     <div class="flex items-center cursor-pointer">
         <div class="flex items-center space-x-4 p-3 w-full">
+            <div class="rounded-lg px-2 py-1 text-white font-bold"
+                [style.background-color]="'#' + (favorite.trip?.route?.color || 'cccccc')">
+                {{ favorite.trip?.route?.id?.id }}
+            </div>
             <div class="flex-1 min-w-0">
                 <p class="text-sm font-medium text-gray-900 truncate">
-                    favorite
+                    {{ favorite.trip?.route?.longName }}
                 </p>
                 <p class="text-sm text-gray-500 truncate">
-                    test
+                    {{ favorite.trip?.tripHeadsign }}
+                </p>
+                <p class="text-sm text-gray-500 truncate">
+                    {{ favorite.trip?.tripShortName }}
                 </p>
             </div>
-            <button class="relative cursor-pointer">
+            <button class="relative cursor-pointer" (click)="openModal($event)">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                     class="lucide lucide-ellipsis-vertical-icon lucide-ellipsis-vertical">
@@ -20,4 +27,6 @@
             </button>
         </div>
     </div>
+
+    <app-trip-modal *ngIf="isModalOpen" (close)="closeModal()" [trip]="favorite.trip!"></app-trip-modal>
 </div>

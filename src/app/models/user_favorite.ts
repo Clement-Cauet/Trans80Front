@@ -1,7 +1,7 @@
 export class UserFavorite {
     id?: Number;
-    userId?: string;
-    tripId?: string;
+    user_id?: string;
+    trips_id?: string;
 
     constructor(data: Partial<UserFavorite>) {
         Object.assign(this, data);

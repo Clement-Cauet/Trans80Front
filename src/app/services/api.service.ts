@@ -95,6 +95,21 @@ export class ApiService {
         });
     }
 
+    deleteUserFavorite(userFavorite: UserFavorite): Promise<UserFavorite> {
+        return new Promise(resolve => {
+            const headers = this.getAuthHeaders();
+            this.httpClient.delete<UserFavorite>(`/api/user_favorite/${userFavorite.id}`, { headers })
+                .subscribe({
+                    next: (response: UserFavorite) => {
+                        resolve(response);
+                    },
+                    error: () => {
+                        resolve(new UserFavorite({}));
+                    }
+                });
+        });
+    }
+
     getAllAgencies(): Promise<Agency[]> {
         return new Promise(resolve => {
             this.httpClient.get<Agency[]>("/api/agencies")

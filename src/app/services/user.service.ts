@@ -17,11 +17,21 @@ export class UserService {
         return this.apiService.addUserHistory(userHistory);
     }
 
+    isFavorite(tripId: string): Promise<boolean> {
+        return this.getUserFavorites().then(favorites => {
+            return favorites.some(favorite => favorite.trips_id === tripId);
+        });
+    }
+
     getUserFavorites(): Promise<UserFavorite[]> {
         return this.apiService.getUserFavorites();
     }
 
     addUserFavorite(userFavorite: UserFavorite): Promise<UserFavorite> {
         return this.apiService.addUserFavorite(userFavorite);
+    }
+
+    deleteUserFavorite(userFavorite: UserFavorite): Promise<UserFavorite> {
+        return this.apiService.deleteUserFavorite(userFavorite);
     }
 }
