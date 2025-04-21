@@ -41,7 +41,6 @@ export class HomeComponent implements OnInit {
       );
       Promise.all(favoritePromises).then(favoritesWithTrips => {
         this.favorites = favoritesWithTrips;
-        console.log('Favorites with trips:', this.favorites);
       });
     }).catch(error => {
       console.error('Error loading favorites:', error);

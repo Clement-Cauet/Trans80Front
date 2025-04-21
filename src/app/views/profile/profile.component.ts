@@ -37,7 +37,6 @@ export class ProfileComponent {
       this.user = this.authService.user;
       this.loadFavorites();
       this.loadHistories();
-      console.log('User:', this.user.accessToken);
     }
   }
 
@@ -56,7 +55,6 @@ export class ProfileComponent {
       );
       Promise.all(favoritePromises).then(favoritesWithTrips => {
         this.favorites = favoritesWithTrips;
-        console.log('Favorites with trips:', this.favorites);
       });
     }).catch(error => {
       console.error('Error loading favorites:', error);
@@ -70,7 +68,6 @@ export class ProfileComponent {
       );
       Promise.all(historyPromises).then(historiesWithTrips => {
         this.histories = historiesWithTrips;
-        console.log('Histories with trips:', this.histories);
       });
     }).catch(error => {
       console.error('Error loading histories:', error);

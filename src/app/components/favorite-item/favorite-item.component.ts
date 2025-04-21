@@ -22,7 +22,6 @@ export class FavoriteItemComponent {
 
   onClick() {
     if (this.favorite.trip) {
-      console.log('Trip ID:', this.favorite.trip.id.id);
       this.router.navigate(
         [`/trips/${this.favorite.trip.route.id.id}`], 
         { queryParams: { tripId: this.favorite.trip.id.id } 

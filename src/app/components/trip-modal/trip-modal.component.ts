@@ -44,7 +44,6 @@ export class TripModalComponent {
           const favoriteToDelete = favorites.find(fav => fav.trips_id === this.trip.id.id);
           if (favoriteToDelete) {
             this.userService.deleteUserFavorite(favoriteToDelete).then(() => {
-              console.log('Favorite removed successfully');
               this.isFavorite = false;
             }).catch(error => {
               console.error('Failed to remove favorite:', error);
@@ -54,7 +53,6 @@ export class TripModalComponent {
       } else {
         const userFavorite = new UserFavorite({ user_id: this.authService.user.sub, trips_id: this.trip.id.id });
         this.userService.addUserFavorite(userFavorite).then(() => {
-          console.log('Favorite added successfully');
           this.isFavorite = true;
         }).catch(error => {
           console.error('Failed to add favorite:', error);
@@ -68,7 +66,6 @@ export class TripModalComponent {
       const userHistory = new UserHistory({ user_id: this.authService.user.sub, trips_id: this.trip.id.id, reserved_date: new Date(this.date), created_at: new Date() });
 
       this.userService.addUserHistory(userHistory).then((response) => {
-        console.log('Reservation added to user history:', response);
         this.close.emit();
       }).catch((error) => {
         console.error('Failed to add reservation to user history:', error);
