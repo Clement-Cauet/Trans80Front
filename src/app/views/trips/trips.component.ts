@@ -50,10 +50,8 @@ export class TripsComponent implements OnInit {
       this.loadTrips();
     });
 
-    combineLatest([
-      this.tripService.getTrips(),
-      this.search$
-    ]).pipe(
+    combineLatest([this.tripService.getTrips(), this.search$])
+    .pipe(
       map(([trips, search]) => {
         const lowerSearch = search.toLowerCase();
         return trips.filter(trip =>

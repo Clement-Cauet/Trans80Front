@@ -1,6 +1,5 @@
 <ng-container *ngIf="tripId; else tripListTemplate">
     <div class="max-w min-h-20 bg-white border shadow-md border-gray-700 rounded-lg my-2">
-
         <div class="flex items-center space-x-4 p-3 w-full">
             <div class="rounded-lg px-2 py-1 text-white font-bold"
                 [style.background-color]="'#' + (trip?.route?.color || 'cccccc')">
@@ -19,6 +18,7 @@
             </div>
         </div>
     </div>
+
     <div class="flex space-x-4 my-4">
         <input type="date" [value]="date" (change)="onDateInputChange($event)" class="border rounded px-2 py-1" />
     </div>
@@ -33,7 +33,7 @@
     </ng-template>
 </ng-container>
 
-<ng-template #tripListTemplate>
+<ng-template #tripListTemplate>    
     <app-searchbar (searchChange)="onSearchChange($event)"></app-searchbar>
 
     <div class="flex space-x-4 my-4">
