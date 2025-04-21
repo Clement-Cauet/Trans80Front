@@ -31,6 +31,7 @@
     </div>
 
     <div *ngIf="isExpanded && stopTimes.length > 0" class="mt-4 ps-10 border-t-1 border-gray-200">
+        <app-map [shapes]="shapes" [stops]="stops"></app-map>
         <app-stop-time-item *ngFor="let stopTime of stopTimes" [stopTime]="stopTime"></app-stop-time-item>
     </div>
 

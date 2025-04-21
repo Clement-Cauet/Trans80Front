@@ -10,6 +10,10 @@ import { map } from 'rxjs/operators';
 import { StopTimeService } from '../../services/stop_time.service';
 import { StopTime } from '../../models/stop_time';
 import { StopTimeItemComponent } from "../../components/stop-time-item/stop-time-item.component";
+import { MapComponent } from '../../components/map/map.component';
+import { Shape } from '../../models/shape';
+import { Stop } from '../../models/stop';
+import { ShapeService } from '../../services/shape.service';
 
 @Component({
   selector: 'app-trips',
@@ -19,6 +23,7 @@ import { StopTimeItemComponent } from "../../components/stop-time-item/stop-time
     SearchbarComponent,
     TripItemComponent,
     StopTimeItemComponent,
+    MapComponent
 ],
   templateUrl: './trips.component.html',
   styleUrl: './trips.component.css'
@@ -30,11 +35,13 @@ export class TripsComponent implements OnInit {
   directionId: number = 0;
   stopTimes: StopTime[] = [];
   trip: Trip | undefined;
+  shapes: Shape[] = [];
+  stops: Stop[] = [];
 
   search$ = new BehaviorSubject<string>('');
   filteredTrips: Trip[] = [];
 
-  constructor(private activedRoute: ActivatedRoute, private tripService: TripService, private stopTimeService: StopTimeService) { }
+  constructor(private activedRoute: ActivatedRoute, private tripService: TripService, private stopTimeService: StopTimeService, private shapeService: ShapeService) { }
 
   ngOnInit(): void {
     this.activedRoute.paramMap.subscribe(params => {
@@ -63,7 +70,7 @@ export class TripsComponent implements OnInit {
     if (this.tripId) {
       this.tripService.getTripById(this.tripId).then(trip => {
         this.trip = trip;
-        console.log('Trip:', trip);
+        this.loadShapes();
       });
     }
   }
@@ -72,7 +79,17 @@ export class TripsComponent implements OnInit {
     if (this.tripId) {
       this.stopTimeService.getStopTimes({ tripId: this.tripId, date: this.date }).then(stopTimes => {
         this.stopTimes = stopTimes;
+        this.stops = stopTimes.map(stopTime => stopTime.stop).filter(stop => stop !== undefined) as Stop[];
       });
+    }
+  }
+
+  loadShapes(): void {
+    if (this.tripId) {
+      this.shapeService.getShapes({ shapeId: this.trip?.shapeId?.id }).then(shapes => {
+        this.shapes = shapes;
+      });
+      this.loadStopTimes();
     }
   }
 

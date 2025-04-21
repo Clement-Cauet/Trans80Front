@@ -24,6 +24,7 @@
     </div>
 
     <div *ngIf="stopTimes.length > 0; else noStopTimes">
+        <app-map [shapes]="shapes" [stops]="stops"></app-map>
         <app-stop-time-item *ngFor="let stopTime of stopTimes" [stopTime]="stopTime"></app-stop-time-item>
     </div>
 

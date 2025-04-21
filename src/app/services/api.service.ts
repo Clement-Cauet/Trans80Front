@@ -7,6 +7,7 @@ import { StopTime } from "../models/stop_time";
 import { UserHistory } from "../models/user_history";
 import { AuthService } from "./auth.service";
 import { UserFavorite } from "../models/user_favorite";
+import { Shape } from "../models/shape";
 
 @Injectable({
     providedIn: "root",
@@ -221,6 +222,25 @@ export class ApiService {
             this.httpClient.get<Stop[]>("/api/stops")
                 .subscribe({
                     next: (response: any) => {
+                        resolve(response);
+                    },
+                    error: () => {
+                        resolve([]);
+                    }
+                });
+        });
+    }
+
+    getShapes(params ?: { shapeId?: string }): Promise<Shape[]> {
+        return new Promise(resolve => {
+            let httpParams = new HttpParams();
+            if (params?.shapeId) {
+                httpParams = httpParams.set('shapeId', params.shapeId);
+            }
+
+            this.httpClient.get<any[]>("/api/shapes", { params: httpParams })
+                .subscribe({
+                    next: (response: any[]) => {
                         resolve(response);
                     },
                     error: () => {
