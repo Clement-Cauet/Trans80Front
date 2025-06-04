@@ -1,59 +1,49 @@
-# Trans80front
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/eddb4bcb-71d9-4a49-9a1f-5c4a4179b69d" alt="Trans80 logo" width="200px">
+</p>
+<h1 align="center">Trans80</h1>
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.6.
+## Description
+Trans80 est une application web développée pour faciliter la consultation des horaires de bus du réseau Trans80 dans la région Hauts-de-France. Elle s'appuie sur les données ouvertes au format GTFS pour offrir une expérience fluide et interactive aux usagers des transports en commun.
 
-## Development server
+## Fonctionnalités
+- **Affichage des lignes** : Visualisation des lignes de bus du réseau Trans80.
+- **Consultation des horaires** : Horaires détaillés des trajets par arrêt.
+- **Favoris** : Ajout et gestion de trajets favoris pour un accès rapide.
+- **Authentification** : Connexion sécurisée via Keycloak.
 
-To start a local development server, run:
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/18372fa1-3f6c-479d-bec0-04a17bb500b8" width="200px">
+  <img src="https://github.com/user-attachments/assets/98e53e34-0823-4ff5-9c72-75e2400497ad" width="200px">
+  <img src="https://github.com/user-attachments/assets/d2479405-3810-44b3-974f-1b600bcd0c36" width="200px">
+  <img src="https://github.com/user-attachments/assets/f325053c-41c8-4294-b3d7-bd596e0b0794" width="200px">
+</div>
 
+## Prérequis
+- Node.js (v18 recommandé)
+- Angular CLI
+- Serveur backend Java Spring Boot opérationnel
+- Serveur Keycloak configuré
+- Navigateur moderne (Chrome, Firefox, Edge…)
+
+## Installation
+- Cloner le projet
 ```bash
-ng serve
+git clone https://github.com/Clement-Cauet/trans80front.git
+cd trans80front
+```
+- Installer les dépendances
+```bash
+npm start
+```
+- Lancer l'application en local avec le proxy
+```bash
+npm start
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Technologies utilisées
+- Frontend : Angular
+- Style : TailwindCSS
+- Backend : Java Spring Boot + OneBusAway (données GTFS)
+- Authentification : Keycloak
+- Données : Format GTFS (General Transit Feed Specification)
